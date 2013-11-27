@@ -1,1 +1,3 @@
-console.log('\'Allo \'Allo!');
+require({
+    baseUrl: 'bower_components'
+});

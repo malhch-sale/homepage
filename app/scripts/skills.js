@@ -1,4 +1,4 @@
-require(['d3'], function(d3) {
+require(['d3', 'tagsdata'], function(d3, tagsdata) {
     var containerHeight = 700,
         container = d3.select(d3.select('#skills').node().parentNode).append('div')
             .style('height', containerHeight + 'px')
@@ -153,8 +153,7 @@ require(['d3'], function(d3) {
             });
     })();
 
-    d3.json('http://localhost/api/articles/tags', function fn(res) {
-        if (res === null) return;
+    tagsdata(function fn(res) {
 
         // 手动指定固定于中心点的 Skills 节点
         var width = canvasWidth,

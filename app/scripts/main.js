@@ -26,3 +26,18 @@ define('fancybox', [
 ], function() {
     return $.fancybox;
 });
+
+define('tagsdata', function() {
+    var data;
+    return function(callback) {
+        if (data) return callback(data);
+
+        $.get('http://localhost/api/articles/tags', function(res, status) {
+            if (status === 'success') {
+                callback(data = res);
+            } else {
+                console.log(status);
+            }
+        });
+    };
+});

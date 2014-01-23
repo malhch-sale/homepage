@@ -521,7 +521,7 @@
 })(jQuery);
 
 
-$(document).ready(function() {
+require(['tagsdata'], function(tagsdata) {
 	var $showcase = $('#showcase').parent();
 	var $snapshot = $showcase.find('.snapshot')
 		.bind('mousewheel', function(event, dir) {
@@ -571,26 +571,6 @@ $(document).ready(function() {
 				$snapshot.find('.name').html(data.name);
 				data.link && $snapshot.find('a').attr('href', data.link);
 			}
-			$container.find('img').attr('src', data.snapshot);
-			data.link && $container.find('a').attr('href', data.link);
-		}
-	}, [{
-			link: 'http://localhost/j/',
-			size: '1000x800'
-		},
-		'http://localhost/'
-	].map(function(obj) {
-		var link, size = '1200x900';
-		if (typeof obj === 'string') {
-			link = obj;
-		} else {
-			link = obj.link;
-			size = obj.size || size;
-		}
-		return {
-			link: link,
-			url: '//localhost/api/showcase/thumbnail/' + btoa(link) + '/200@' + size + '.png',
-			snapshot: '//localhost/api/showcase/snapshot/' + btoa(link) + '/' + size + '.png'
-		};
-	}));
+		}, showcases);
+	});
 });

@@ -29,15 +29,19 @@ define('fancybox', [
 
 define('tagsdata', function() {
     var data;
-    return function(callback) {
+    return function(callback, errorCallback) {
         if (data) return callback(data);
 
-        $.get('http://localhost/api/articles/tags', function(res, status) {
-            if (status === 'success') {
-                callback(data = res);
-            } else {
-                console.log(status);
-            }
+        $.ajax({
+            url: 'http://localhost/api/articles/tags',
+            success: function(res, status) {
+                if (status === 'success') {
+                    callback(data = res);
+                } else {
+                    $.isFunction(errorCallback) && errorCallback();
+                }
+            },
+            error: errorCallback
         });
     };
 });

@@ -1,6 +1,7 @@
 require(['d3', 'tagsdata'], function(d3, tagsdata) {
-    var containerHeight = 700,
-        container = d3.select(d3.select('#skills').node().parentNode).append('div')
+    var section = d3.select(d3.select('#skills').node().parentNode),
+        containerHeight = 700,
+        container = section.append('div')
             .style('height', containerHeight + 'px')
             .style('overflow', 'hidden')
             .style('border', '1px solid silver'),
@@ -154,6 +155,7 @@ require(['d3', 'tagsdata'], function(d3, tagsdata) {
     })();
 
     tagsdata(function fn(res) {
+        section.select('.loading').attr('class', 'ng-hide');
 
         // 手动指定固定于中心点的 Skills 节点
         var width = canvasWidth,
@@ -245,6 +247,10 @@ require(['d3', 'tagsdata'], function(d3, tagsdata) {
             drawNodesAndLinks(force);
             force.start();
         });
+    }, function() {
+        section.select('.loading')
+            .attr('class', 'text-center alert-box warning')
+            .html('No response from server');
     });
 
     function nodesFilter(nodes) {

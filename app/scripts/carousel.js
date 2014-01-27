@@ -572,5 +572,9 @@ require(['tagsdata'], function(tagsdata) {
 				data.link && $snapshot.find('a').attr('href', data.link);
 			}
 		}, showcases);
+	}, function() {
+		$showcase.find('.loading')
+			.attr('class', 'text-center alert-box warning')
+			.html('No response from server');
 	});
 });

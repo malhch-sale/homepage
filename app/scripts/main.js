@@ -27,13 +27,13 @@ define('fancybox', [
     return $.fancybox;
 });
 
-define('tagsdata', function() {
+define('tagsdata', ['config'], function(env) {
     var data;
     return function(callback, errorCallback) {
         if (data) return callback(data);
 
         $.ajax({
-            url: 'http://localhost/api/articles/tags',
+            url: env.urls.tagsdata,
             success: function(res, status) {
                 if (status === 'success') {
                     callback(data = res);

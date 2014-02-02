@@ -38,6 +38,10 @@ module.exports = function (grunt) {
                     '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
                     '<%= yeoman.app %>/images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
                 ]
+            },
+            dev: {
+                files: ['<%= yeoman.app %>/envs/dev.js'],
+                tasks: ['copy:dev']
             }
         },
         connect: {
@@ -282,6 +286,14 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            dev: {
+                dest: '<%= yeoman.app %>/config.js',
+                src: '<%= yeoman.app %>/envs/development.js'
+            },
+            prod: {
+                dest: '<%= yeoman.app %>/config.js',
+                src: '<%= yeoman.app %>/envs/production.js'
             }
         },
         modernizr: {
@@ -297,7 +309,8 @@ module.exports = function (grunt) {
         concurrent: {
             server: [
                 'compass',
-                'copy:styles'
+                'copy:styles',
+                'copy:dev'
             ],
             test: [
                 'copy:styles'
@@ -305,6 +318,7 @@ module.exports = function (grunt) {
             dist: [
                 'compass',
                 'copy:styles',
+                'copy:prod',
                 'imagemin',
                 'svgmin',
                 'htmlmin'

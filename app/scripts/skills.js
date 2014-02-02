@@ -1,4 +1,4 @@
-require(['d3', 'tagsdata'], function(d3, tagsdata) {
+require(['d3', 'tagsdata', 'config'], function(d3, tagsdata, config) {
     var section = d3.select(d3.select('#skills').node().parentNode),
         containerHeight = 700,
         container = section.append('div')
@@ -24,7 +24,7 @@ require(['d3', 'tagsdata'], function(d3, tagsdata) {
         .on('click', function showSkill() {
             var node, $node = $(d3.event.target).closest('.node');
             if ($node.length && (node = d3.select($node[0]).data()[0]) && node.title) {
-                d3.json('/api/articles/blob/' + node.title, function fn(res) {
+                d3.json(config.urls.articleBlob(node.title), function fn(res) {
                     if (res === null) return;
 
                     require(['fancybox'], function(fancybox) {

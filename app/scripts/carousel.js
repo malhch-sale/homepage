@@ -521,7 +521,7 @@
 })(jQuery);
 
 
-require(['tagsdata'], function(tagsdata) {
+require(['tagsdata', 'config'], function(tagsdata, config) {
 	var $showcase = $('#showcase').parent();
 	var $snapshot = $showcase.find('.snapshot')
 		.bind('mousewheel', function(event, dir) {
@@ -546,9 +546,9 @@ require(['tagsdata'], function(tagsdata) {
 				link = 'http:' + parts[1].replace(/^http:/, ''),
 				size = n == 4 ? parts[2] : '1200x900';
 			return {
-				link: link,
-				url: '/api/showcase/thumbnail/' + btoa(link) + '/200@' + size + '.png',
-				snapshot: '/api/showcase/snapshot/' + btoa(link) + '/' + size + '.png'
+				link: config.urls.showcase(link),
+				url: config.urls.thumbnail(btoa(link).replace(/\//g, '-'), size),
+				snapshot: config.urls.snapshot(btoa(link).replace(/\//g, '-'), size),
 				name: name,
 				tooltip: name
 			};

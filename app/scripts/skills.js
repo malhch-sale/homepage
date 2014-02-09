@@ -234,21 +234,18 @@ require(['d3'], function(d3) {
         // 这两行没用，加上反而无法正常显示内容
         //.attr('requiredExtensions', "http://www.w3.org/1999/xhtml")
         //.append('xhtml:body').attr('xmlns', "http://www.w3.org/1999/xhtml")
-        var enter = gnodes.enter().append('g').attr('class', function(node) {
-            return node.class;
-        });
-        enter.append('circle').attr('r', function(node) {
-            return node.links.length + 1;
-        });
-        enter.append('foreignObject').append('xhtml:a').text(function fn(node) {
-            return typeof node.displayName === 'undefined' ? node.name : node.displayName;
-        });
+        var enter = gnodes.enter().append('g');
+        enter.append('circle');
+        enter.append('foreignObject').append('xhtml:a');
         gnodes.exit().remove();
 
         gnodes.each(function(node) {
+            d3.select(this).attr('class', node.class);
+            d3.select(this.childNodes[0]).attr('r', node.links.length + 1);
             var w, h, rw, rh, scale = 0.75,
                 f = this.childNodes[1],
                 a = f.childNodes[0];
+            a.textContent = typeof node.displayName === 'undefined' ? node.name : node.displayName;
             rw = (w = a.offsetWidth) * scale, rh = (h = a.offsetHeight) * scale;
             f.setAttribute('width', w);
             f.setAttribute('height', h);

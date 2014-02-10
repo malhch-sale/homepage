@@ -572,6 +572,15 @@ require(['tagsdata', 'config'], function(tagsdata, config) {
 				data.link && $snapshot.find('a').attr('href', data.link);
 			}
 		}, showcases);
+
+		document.addEventListener('showcaseSelected', function(e) {
+			$carousel.find('img').each(function(i, img) {
+				if ($(img).data().name === e.detail) {
+					location.hash = '#showcase';
+					img.click();
+				}
+			});
+		});
 	}, function() {
 		$showcase.find('.loading')
 			.attr('class', 'text-center alert-box warning')

@@ -145,6 +145,10 @@ g.node {
   &.showcase circle {
     fill: silver;
   }
+  &.hl a {
+    background-color: red;
+    color: white;
+  }
 }
 line.link {
   stroke: silver;

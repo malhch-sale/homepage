@@ -149,6 +149,10 @@ g.node.subskill a {
 g.node.showcase circle {
   fill: silver;
 }
+g.node.hl a {
+  background-color: red;
+  color: white;
+}
 
 line.link {
   stroke: silver;

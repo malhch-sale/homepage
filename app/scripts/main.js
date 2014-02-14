@@ -1,4 +1,5 @@
 require({
+    waitSeconds: 0,
     map: {
         '*': {
             'css': 'require-css/css.min'

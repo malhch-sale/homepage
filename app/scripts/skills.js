@@ -1,7 +1,7 @@
 require(['d3', 'tagsdata', 'config'], function(d3, tagsdata, config) {
     var section = d3.select(d3.select('#skills').node().parentNode),
         containerHeight = 700,
-        container = section.append('div')
+        container = d3.select('.section.skills .canvas')
             .style('height', containerHeight + 'px')
             .style('overflow', 'hidden')
             .style('border', '1px solid silver'),

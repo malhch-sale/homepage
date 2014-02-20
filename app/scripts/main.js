@@ -42,6 +42,7 @@ define('tagsdata', ['config'], function(env) {
                     $.isFunction(errorCallback) && errorCallback();
                 }
             },
+            dataType: 'json',
             error: errorCallback
         });
     };

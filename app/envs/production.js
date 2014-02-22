@@ -5,7 +5,7 @@ define('config', function() {
 
 	var urls = {
 		tagsdata: host + '/articles/tags' + format,
-		recentArticles: host + '/articles/latest/0/branch' + format,
+		recentArticles: repo + '/git/refs/heads',
 		articleBlob: function(title, sha) {
 			return host + '/articles/blob/' + title + '/' + sha;
 		},
@@ -44,6 +44,7 @@ define('config', function() {
 	}
 
 	return {
+		utf8to16: utf8to16,
 		urls: urls,
 		recentArticles: function(success, failure) {
 			$.getJSON(urls.recentArticles).done(success).fail(failure);

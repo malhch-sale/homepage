@@ -15,9 +15,15 @@ require(['angular', 'moment', 'config'], function fn(angular, moment, config) {
                     $scope.$apply(function() {
                         $scope.status = 'success';
                         recentUpdates = res.map(function fn(row) {
-                            row.time = moment(row.time).fromNow();
-                            return row;
-                        });
+                            var m = row.ref.match(/^refs\/heads\/(\d+)_(.+)$/);
+                            return m ? {
+                                time: moment(m[1] * 1000).fromNow(),
+                                title: config.utf8to16(atob(m[2])),
+                                sha: row.object.sha
+                            } : null;
+                        }).filter(function(row) {
+                            return !!row;
+                        }).reverse();
                         recentGo();
                     });
                 }, function failure() {

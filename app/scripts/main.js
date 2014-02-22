@@ -28,22 +28,30 @@ define('fancybox', [
     return $.fancybox;
 });
 
-define('tagsdata', ['config'], function(env) {
-    var data;
-    return function(callback, errorCallback) {
-        if (data) return callback(data);
+define('tagsdata', ['config'], function(config) {
+    var data, status, listeners = [];
 
-        $.ajax({
-            url: env.urls.tagsdata,
-            success: function(res, status) {
-                if (status === 'success') {
-                    callback(data = res);
-                } else {
-                    $.isFunction(errorCallback) && errorCallback();
-                }
-            },
-            dataType: 'json',
-            error: errorCallback
+    function fire() {
+        listeners.forEach(function fn(row) {
+            data ? row[0](data) : row[1]();
         });
+    }
+
+    return function(callback, errorCallback) {
+
+        if (status === 'loaded') {
+            data ? callback(data) : errorCallback();
+        } else {
+            listeners.push([callback, errorCallback]);
+
+            if (!status) {
+                status = 'loading';
+                config.articlesTags(function success(res) {
+                    status = 'loaded';
+                    data = res;
+                    fire();
+                }, fire);
+            }
+        }
     };
 });

@@ -4,7 +4,7 @@ define('config', function() {
 		repo = 'https://api.github.com/repos/mlhch/articles';
 
 	var urls = {
-		tagsdata: host + '/articles/tags' + format,
+		articlesTags: repo + '/git/refs/tags',
 		recentArticles: repo + '/git/refs/heads',
 		articleBlob: function(title, sha) {
 			return host + '/articles/blob/' + title + '/' + sha;
@@ -48,6 +48,15 @@ define('config', function() {
 		urls: urls,
 		recentArticles: function(success, failure) {
 			$.getJSON(urls.recentArticles).done(success).fail(failure);
+		},
+		articlesTags: function(success, failure) {
+			$.getJSON(urls.articlesTags).done(function done(res) {
+				success(res.map(function fn(row) {
+					return row.ref.replace(/^refs\/tags\//, '').split('.').map(function fn(row) {
+						return utf8to16(atob(row));
+					}).join('|');
+				}));
+			}).fail(failure);
 		},
 		articleBlob: function(title, sha, success, failure) {
 			$.getJSON(urls.articleTree(sha))
